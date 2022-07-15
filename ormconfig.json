@@ -1,0 +1,13 @@
+{
+  "type": "mysql",
+  "host": "localhost",
+  "port": 3306,
+  "username": "mks_backend_challenge",
+  "password": "235704",
+  "database": "mks_backend_challenge",
+  "entities": ["dist/*/.entity{.ts,.js}"],
+  "migrations": ["migrations/*.js"],
+  "cli": {
+      "migrationsDir": "src/migrations"
+  }
+}
