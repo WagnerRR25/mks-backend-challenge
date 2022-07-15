@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Film } from 'src/film/entities/film.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'classifications' })
 export class Classification {
@@ -7,6 +8,9 @@ export class Classification {
 
   @Column()
   label: string;
+
+  @OneToMany(() => Film, (film) => film.classifications)
+  film: Film[];
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;

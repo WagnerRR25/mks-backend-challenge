@@ -1,4 +1,9 @@
-import { Module } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
@@ -10,6 +15,7 @@ import { User } from './user/entities/user.entity';
 import { Classification } from './classification/entities/classification.entity';
 import { Film } from './film/entities/film.entity';
 import { Category } from './category/entities/category.entity';
+import { ValidateHeadersMiddleware } from './common/middleware/validate-header-middleware';
 
 @Module({
   imports: [
@@ -32,4 +38,11 @@ import { Category } from './category/entities/category.entity';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(ValidateHeadersMiddleware)
+      .exclude({ path: 'user', method: RequestMethod.POST })
+      .forRoutes('*');
+  }
+}
